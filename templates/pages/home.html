@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load socialaccount %}
 {% block main-content %}
 
 <div id="page-wrapper">
@@ -9,7 +9,15 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+    <div>
+    {% get_providers as socialaccount_providers %}
+    {% for pro in socialaccount_providers %}
+      1. First Account  {{ pro.name }}
+    {% endfor %}
+</div>
     <div id="testscript"></div>
+    {{ user.display_name }} test
         </div>
+
 
 {% endblock main-content %}

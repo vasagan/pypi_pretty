@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 #Django-allauth specific settings
@@ -50,15 +51,18 @@ INSTALLED_APPS = [
 #SITE ID matching django.in at /admin/sites
 SITE_ID = 1
 
-#LOGIN_REDIRECT_URL = '/'
-SOCIALACCOUNT_QUERY_EMAIL = True
-'''
-SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        'SCOPE': ['user', 'public_repo'],
-  }
-}l
-'''
+# leading slash appends path to domain.. otherwise appends to exisitng path
+LOGIN_REDIRECT_URL = '/profile/'
+
+# If Github does not provide email..results in error (if True)
+#SOCIALACCOUNT_QUERY_EMAIL = True
+
+SOCIALACCOUNT_AUTO_SIGNUP = True
+ACCOUNT_EMAIL_VERIFICATION = None  # Skips sending email to customer - smtp lib error avoided in local dev env
+
+# If True, gets username and email from user when app does not share email id
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+
 # Authentication Backends needed for django-allauth package
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -82,7 +86,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'pypi.urls'
+ROOT_URLCONF = 'pypi_pretty.urls'
 
 TEMPLATES = [
     {
@@ -100,7 +104,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'pypi.wsgi.application'
+WSGI_APPLICATION = 'pypi_pretty.wsgi.application'
 
 
 # Database

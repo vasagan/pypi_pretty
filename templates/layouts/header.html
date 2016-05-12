@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load socialaccount %}
  <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;">
             <div class="navbar-header">
@@ -12,23 +13,22 @@
             </div>
             <!-- /.navbar-header -->
 
-            {% if user.authenticated %}
+            {% if user.is_authenticated %}
 
             <ul class="nav navbar-top-links navbar-right">
 
-
+                {{ user.first_name }}
                 <li class="dropdown">
 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                         <img src="{{ extra_data.avatar_url }}" style="width:40px;height:40px;"> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> Profile</a>
+                        <li><a href="{% url 'user_profile'%}"><i class="fa fa-user fa-fw"></i> Profile</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
+
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="{% url 'user_logout'%}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -38,10 +38,16 @@
             </ul>
             {% else %}
                  <div class="navbar-header pull-right" style="margin:10px 10px;">
-            <a class="btn btn-block btn-social btn-github">
+            <a class="btn btn-block btn-social btn-github" href="{% provider_login_url 'github' process='login' %}">
                                 <i class="fa fa-github"></i> Sign in with GitHub
-                            </a></div>
+                            </a>
+         <!--        <a class="btn btn-block btn-social btn-facebook" href="{% provider_login_url 'facebook' process='login' %}">
+                                <i class="fa fa-facebook"></i> Sign in with Facebook
+                            </a>  -->
+                 </div>
             {% endif %}
+
+
 
             <!-- /.navbar-top-links -->
 
@@ -66,7 +72,7 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Packages<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Top Downloads</a>
+                                    <a href="{% url 'user_button' %}">Top Downloads</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Recent Downloads</a>
